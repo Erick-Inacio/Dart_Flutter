@@ -42,3 +42,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+#Pastas de OS que não utilizareis no projeto
+/linux/
+/macos/
+/web/
+/windows/
+.vscode
