@@ -1,5 +1,6 @@
 import 'package:agenda/classes/cores_pink.dart';
 import 'package:agenda/repositories/todo_repository.dart';
+import 'package:agenda/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import '../models/todo.dart';
 import '../widgets/todo_list_item.dart';
@@ -17,8 +18,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
 
   List<Todo> todos = [];
 
-  Todo? deletedTodo;
-  int? deletedTodoPos;
+  Todo? deletedTodo, completedTodo;
+  int? deletedTodoPos, completedTodoPos;
   String? errorText;
 
   @override
@@ -46,53 +47,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: TextField(
+                    child: MyTextField(
                       controller: todoController,
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          borderSide: BorderSide(
-                            color: Cores.pink,
-                          ),
-                        ),
-                        errorText: errorText,
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.red,
-                            )),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          borderSide: BorderSide(
-                            color: Cores.pink,
-                          ),
-                        ),
-                        labelText: 'Adicione uma tarefa',
-                        hintText: 'Digite sua tarefa...',
-                        hintStyle: TextStyle(
-                          color: Cores.pink,
-                        ),
-                        labelStyle: TextStyle(
-                          color: Cores.pinkAccent,
-                        ),
-                      ),
-                      style: TextStyle(
-                        color: Cores.pink,
-                      ),
+                      errorText: errorText,
                     ),
                   ),
                   SizedBox(
@@ -151,6 +108,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                       TodoListItem(
                         todo: todo,
                         onDelete: onDelete,
+                        onComplete: onComplete,
                       ),
                   ],
                 ),
@@ -160,7 +118,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 children: [
                   Expanded(
                     child: Text(
-                      'Você possui 0 tarefas pendentes',
+                      'Você possui ${todos.length} tarefas pendentes',
                       style: TextStyle(
                         color: Cores.pinkAccent,
                       ),
@@ -189,6 +147,43 @@ class _ToDoListPageState extends State<ToDoListPage> {
         ),
       ),
     );
+  }
+
+  void onComplete(Todo todo) {
+    completedTodo = todo;
+    completedTodoPos = todos.indexOf(todo);
+
+    setState(() {
+      todo.cor = Color.fromARGB(136, 0, 250, 12);
+    });
+
+    todoRepository.saveTodoList(todos);
+
+    /* ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        padding: EdgeInsets.all(20),
+        content: Text(
+          'A Tarefa "${todo.title}" foi removida com sucesso!',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Cores.pinkClear,
+        action: SnackBarAction(
+          label: 'Desfazer',
+          textColor: Cores.pinkAccent,
+          onPressed: () {
+            setState(() {
+              todos.insert(deletedTodoPos!, deletedTodo!);
+            });
+            todoRepository.saveTodoList(todos);
+          },
+        ),
+        duration: const Duration(seconds: 5),
+      ),
+    ); */
   }
 
   void onDelete(Todo todo) {

@@ -5,14 +5,17 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
 class TodoListItem extends StatelessWidget {
-  const TodoListItem({
-    super.key,
-    required this.todo,
-    required this.onDelete,
-  });
+  const TodoListItem(
+      {super.key,
+      required this.todo,
+      required this.onDelete,
+      required this.onComplete,
+      this.cor = Cores.pink});
 
   final Todo todo;
   final Function(Todo) onDelete;
+  final Function(Todo) onComplete;
+  final Color cor;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,22 @@ class TodoListItem extends StatelessWidget {
         Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Slidable(
+        startActionPane: ActionPane(
+          motion: DrawerMotion(),
+          extentRatio: 0.25,
+          children: [
+            SlidableAction(
+              label: 'Ok',
+              borderRadius: BorderRadius.circular(10),
+              backgroundColor: Colors.green,
+              //foregroundColor: Colors.white,
+              icon: Icons.check_circle,
+              onPressed: (context) {
+                onComplete(todo);
+              },
+            ),
+          ],
+        ),
         endActionPane: ActionPane(
           extentRatio: 0.25,
           motion: const DrawerMotion(),
@@ -47,7 +66,7 @@ class TodoListItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Cores.pinkClear,
+            color: cor,
           ),
           //color: Cores.pinkClear,
           padding: const EdgeInsets.all(16),
