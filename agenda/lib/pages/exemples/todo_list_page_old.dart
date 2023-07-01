@@ -59,7 +59,7 @@ class ToDoListPage extends StatelessWidget {
                 onSubmitted: onSubmitted,
               ),
               ElevatedButton(
-                onPressed: login,
+                onPressed: (){},
                 child: Text('Entrar'),
               ),
             ],
@@ -71,10 +71,10 @@ class ToDoListPage extends StatelessWidget {
 
   /*utilizando o TextEditingController para controlar o texto, sendo o unico que
    consigo alterar o texto*/
-  void login() {
-    String text = emailControl.text;
-    print(text);
-  }
+  //void login() {
+    //String text = emailControl.text;
+    //print(text);
+  //}
 
   /*Unico que consigo validar a cada alteração feita no campo*/
   void onChanged(String text) {
@@ -83,6 +83,6 @@ class ToDoListPage extends StatelessWidget {
 
   /*apenas altera quando clico em algum botão para slavar o texto*/
   void onSubmitted(String text) {
-    print(text);
+    //print(text);
   }
 }

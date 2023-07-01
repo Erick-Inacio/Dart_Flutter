@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl:
   flutter_slidable: ^3.0.0
+  shared_preferences: ^2.1.2
+  flutter_launcher_icons: ^0.13.1
+
+  
 
 dev_dependencies:
   flutter_test:
@@ -91,3 +95,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "C:/Users/erick/Desktop/Faculdade/Dart.Flutter/agenda/lib/assets/icons/icon.png"
+  min_sdk_android: 21
