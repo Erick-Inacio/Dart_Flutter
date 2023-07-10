@@ -1,7 +1,7 @@
 import 'package:app_imc/pages/tela_imc.dart';
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(const Imc());
 }
 
@@ -11,7 +11,6 @@ class Imc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ImcPage()
-    );
+        debugShowCheckedModeBanner: false, home: ImcPage());
   }
 }

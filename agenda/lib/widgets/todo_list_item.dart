@@ -4,31 +4,28 @@ import 'package:agenda/models/todo.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
-class TodoListItem extends StatelessWidget {
-  const TodoListItem(
-      {super.key,
-      required this.todo,
-      required this.onDelete,
-      required this.onComplete,
-      this.cor = Cores.pink});
+class TodoListItem extends StatefulWidget {
+  const TodoListItem({
+    super.key,
+    required this.todo,
+    required this.onDelete,
+    required this.onComplete,
+  });
 
   final Todo todo;
   final Function(Todo) onDelete;
   final Function(Todo) onComplete;
-  final Color cor;
+  //final bool isCompleted;
 
   @override
+  // ignore: library_private_types_in_public_api
+  _TodoListItemState createState() => _TodoListItemState();
+}
+
+class _TodoListItemState extends State<TodoListItem> {
+  @override
   Widget build(BuildContext context) {
-    return /* Slidable(
-      actionPane: const SlidableBehindActionPane(),
-      secondaryActions: [
-        IconSlideAction(
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () {},
-        ) */
-        //flutter_slidable 3.0.0
-        Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Slidable(
         startActionPane: ActionPane(
@@ -39,10 +36,12 @@ class TodoListItem extends StatelessWidget {
               label: 'Ok',
               borderRadius: BorderRadius.circular(10),
               backgroundColor: Colors.green,
-              //foregroundColor: Colors.white,
               icon: Icons.check_circle,
               onPressed: (context) {
-                onComplete(todo);
+                setState(() {
+                  widget.todo.completed = true;
+                  //todoRepository.saveTodoList(this);
+                });
               },
             ),
           ],
@@ -55,10 +54,9 @@ class TodoListItem extends StatelessWidget {
               label: 'Deletar',
               borderRadius: BorderRadius.circular(10),
               backgroundColor: Colors.red,
-              //foregroundColor: Colors.white,
               icon: Icons.delete,
               onPressed: (context) {
-                onDelete(todo);
+                widget.onDelete(widget.todo);
               },
             ),
           ],
@@ -66,24 +64,23 @@ class TodoListItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: cor,
+            color: widget.todo.completed
+                ? Color.fromARGB(255, 139, 243, 162)
+                : Cores.pink,
           ),
-          //color: Cores.pinkClear,
           padding: const EdgeInsets.all(16),
           child: Column(
-            //tomar cuidado com com esse crossAxis para q ele ocupe
-            //sempre o maior espaço disponível
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                DateFormat('dd/MM/yy').format(todo.dateTime),
-                style: TextStyle(
+                DateFormat('dd/MM/yy').format(widget.todo.dateTime),
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),
               Text(
-                todo.title,
-                style: TextStyle(
+                widget.todo.title,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),

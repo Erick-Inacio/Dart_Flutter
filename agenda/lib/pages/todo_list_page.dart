@@ -150,40 +150,12 @@ class _ToDoListPageState extends State<ToDoListPage> {
   }
 
   void onComplete(Todo todo) {
-    completedTodo = todo;
-    completedTodoPos = todos.indexOf(todo);
+    deletedTodo = todo;
+    deletedTodoPos = todos.indexOf(todo);
 
-    setState(() {
-      todo.cor = Color.fromARGB(136, 0, 250, 12);
-    });
-
+    todo.completed = true;
+    todo.cor = Color.fromARGB(255, 139, 243, 162);
     todoRepository.saveTodoList(todos);
-
-    /* ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        padding: EdgeInsets.all(20),
-        content: Text(
-          'A Tarefa "${todo.title}" foi removida com sucesso!',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        backgroundColor: Cores.pinkClear,
-        action: SnackBarAction(
-          label: 'Desfazer',
-          textColor: Cores.pinkAccent,
-          onPressed: () {
-            setState(() {
-              todos.insert(deletedTodoPos!, deletedTodo!);
-            });
-            todoRepository.saveTodoList(todos);
-          },
-        ),
-        duration: const Duration(seconds: 5),
-      ),
-    ); */
   }
 
   void onDelete(Todo todo) {

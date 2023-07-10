@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import '../classes/cores_pink.dart';
 
 class Todo {
   Todo({
     required this.title,
     required this.dateTime,
+    this.completed,
     this.cor = Cores.pink,
   });
 
@@ -13,16 +14,19 @@ class Todo {
       : title = json['title'],
         dateTime = DateTime.parse(json['dateTime']),
         cor = _colorFromJson(json['cor']);
+        completed = ['completed'];
 
   String title;
   DateTime dateTime;
   Color cor;
+  bool? completed = false;
 
   Map<String, dynamic> toJson() {
     return {
       'title': title,
       'dateTime': dateTime.toIso8601String(),
       'cor': _colorToJson(cor),
+      'completed': completed,
     };
   }
 
