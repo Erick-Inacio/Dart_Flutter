@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../classes/palette.dart';
 
-class MyButton extends StatelessWidget {
+class MyButton extends StatefulWidget {
   const MyButton({
     super.key,
     required this.text,
@@ -12,9 +12,13 @@ class MyButton extends StatelessWidget {
   final Function() onPressed;
 
   @override
+  State<MyButton> createState() => _MyButtonState();
+}
+
+class _MyButtonState extends State<MyButton> {
+  @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: Palette.purple1,
         padding: const EdgeInsets.fromLTRB(50, 25, 50, 25),
@@ -22,8 +26,9 @@ class MyButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
+      onPressed: widget.onPressed,
       child: Text(
-        'Teste',
+        widget.text,
         style: TextStyle(
           color: Palette.purpleClear,
         ),

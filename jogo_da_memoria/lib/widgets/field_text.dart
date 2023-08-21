@@ -31,6 +31,7 @@ class MyTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       enabled: enable,
+      textAlign: TextAlign.center,
       style: TextStyle(
         // fontWeight: FontWeight.bold,
         fontSize: 18,
@@ -51,7 +52,6 @@ class MyTextField extends StatelessWidget {
           color: Palette.purple1,
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          decorationColor: Palette.purple4,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:jogo_da_memoria/classes/palette.dart';
+import 'package:jogo_da_memoria/pages/home/players_input.dart';
 import 'package:jogo_da_memoria/widgets/button.dart';
 import 'package:jogo_da_memoria/widgets/field_text.dart';
 
@@ -17,29 +17,49 @@ class _JogadoresState extends State<Jogadores> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(color: Palette.purple2),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MyTextField(
-                  controller: numPlayerControll,
-                  text: 'Número de Jogadores',
-                  teclado: TextInputType.number,
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                MyButton(
-                  text: 'Próximo',
-                  onPressed: () {},
-                ),
-              ],
-            ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Palette.purple3,
+        title: Text(
+          'Jogo da Memória',
+          style: TextStyle(
+            color: Palette.purpleClear,
+            fontWeight: FontWeight.w500,
+            fontSize: 30,
           ),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MyTextField(
+              controller: numPlayerControll,
+              text: 'Número de Jogadores',
+              teclado: TextInputType.number,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            MyButton(
+              text: 'Próximo',
+              onPressed: () {
+                setState(() {
+                  int numPlayers = int.parse(numPlayerControll.text);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlayersInput(
+                        numPlayers: numPlayers,
+                      ),
+                    ),
+                  );
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
