@@ -1,6 +1,5 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
 const String contactTable = 'contactTable';
 const String idColumn = 'idColumn';
 const String nameColumn = 'nameColumn';
