@@ -14,7 +14,7 @@ class ContactHelper {
 
   ContactHelper.internal();
 
-  Database? _db;
+  Database? _db; 
 
   Future<Database> get db async {
     if (_db != null) {
