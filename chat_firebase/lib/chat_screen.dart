@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chat_firebase/chat_message.dart';
 import 'package:chat_firebase/text_composer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,17 +49,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   case ConnectionState.waiting:
                     return const Center(child: CircularProgressIndicator());
                   default:
-                    List<DocumentSnapshot> documents =
+                    List<DocumentSnapshot>? documents =
                         snapshot.data!.docs.reversed.toList();
                     return ListView.builder(
                       itemCount: documents.length,
                       reverse: true,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            (documents[index].data()!
-                                as Map<String, dynamic>)['text'],
-                          ),
+                        return ChatMessage(
+                          data: documents[index].data() as Map<String, dynamic>,
                         );
                       },
                     );
@@ -79,14 +77,11 @@ class _ChatScreenState extends State<ChatScreen> {
           await googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuth =
           await googleSignInAccount!.authentication;
-
       final AuthCredential credential = GoogleAuthProvider.credential(
           idToken: googleSignInAuth.idToken,
           accessToken: googleSignInAuth.accessToken);
-
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
-
       final User? user = userCredential.user;
 
       return user;
